@@ -45,6 +45,11 @@
 
 #include "font.h" /* Font for human readable text */
 
+#include <opencv2/opencv.hpp>
+#include <opencv2/highgui/highgui_c.h>
+
+using namespace cv;
+
 #define SSET	"0123456789ABCDEF"
 
 #ifndef NO_PNG
@@ -85,6 +90,13 @@ void buffer_plot(struct zint_symbol *symbol, char *pixelbuf) {
                     break;
 
             }
+        }
+    }
+    Mat bgr(symbol->bitmap_height, symbol->bitmap_width, CV_8UC3, symbol->bitmap);
+    imshow("bgr", bgr);
+    while (1) {
+        if (waitKey(1) == 27) {
+            break;
         }
     }
 }
