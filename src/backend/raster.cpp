@@ -45,11 +45,6 @@
 
 #include "font.h" /* Font for human readable text */
 
-#include <opencv2/opencv.hpp>
-#include <opencv2/highgui/highgui_c.h>
-
-using namespace cv;
-
 #define SSET	"0123456789ABCDEF"
 
 #ifndef NO_PNG
@@ -92,37 +87,6 @@ void buffer_plot(struct zint_symbol *symbol, char *pixelbuf) {
             }
         }
     }
-
-    namedWindow("bgr", WINDOW_AUTOSIZE);
-    Mat bgr = Mat(symbol->bitmap_height, symbol->bitmap_width, CV_8UC3, symbol->bitmap);
-    imshow("bgr", bgr);
-    while (1) {
-        if (waitKey(1) == 27) {
-            break;
-        }
-    }
-    destroyWindow("bgr");
-
-    // namedWindow("bgr", WINDOW_AUTOSIZE);
-    // Mat bgr = Mat::zeros(Size(symbol->bitmap_width, symbol->bitmap_height), CV_8UC1);
-    // for (int y = 0; y < symbol->bitmap_height; y++) {
-    //     int offset = y * symbol->bitmap_width;
-    //     for (int x = 0; x < symbol->bitmap_width; x++) {
-    //         char pixel = pixelbuf[offset + x];
-    //         if (pixel == '1') {
-    //             bgr.at<uchar>(y, x) = 0;
-    //         } else {
-    //             bgr.at<uchar>(y, x) = 255;
-    //         }
-    //     }
-    // }
-    // imshow("bgr", bgr);
-    // while (1) {
-    //     if (waitKey(1) == 27) {
-    //         break;
-    //     }
-    // }
-    // destroyWindow("bgr");
 }
 
 int save_raster_image_to_file(struct zint_symbol *symbol, int image_height, int image_width, char *pixelbuf, int rotate_angle, int image_type) {

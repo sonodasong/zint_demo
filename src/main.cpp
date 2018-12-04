@@ -3,6 +3,11 @@
 #include <string.h>
 #include <zint.h>
 
+#include <opencv2/opencv.hpp>
+#include <opencv2/highgui/highgui_c.h>
+
+using namespace cv;
+
 int main(int argc, char **argv) {
 
 
@@ -30,6 +35,16 @@ int main(int argc, char **argv) {
                 printf("%s\n", my_symbol->errtxt);
                 break;
             }
+
+            namedWindow("bgr", WINDOW_AUTOSIZE);
+            Mat bgr = Mat(my_symbol->bitmap_height, my_symbol->bitmap_width, CV_8UC3, my_symbol->bitmap);
+            imshow("bgr", bgr);
+            while (1) {
+                if (waitKey(1) == 27) {
+                    break;
+                }
+            }
+            destroyWindow("bgr");
         }
         ZBarcode_Delete(my_symbol);
     }
